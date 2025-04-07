@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+
+<body>
+    <h2>Register</h2>
+
+    <form id="registerForm">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="button" id="registerButton">Register</button>
+        <p id="errorMessage" style="color: red;"></p>
+    </form>
+
+    <script>
+        document.getElementById('registerButton').addEventListener('click', async function () {
+            const username_field = document.getElementById('name').value;
+            const password_field = document.getElementById('password').value;
+            const errorMessageElement = document.getElementById('errorMessage');
+
+            // Clear any previous error messages
+            errorMessageElement.textContent = '';
+
+            try {
+                const response = await fetch('/user/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: username_field, password: password_field })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    // If registration is successful, redirect to login page
+                    window.location.href = '/user/login';
+                } else {
+                    // Show error message if the name already exists
+                    errorMessageElement.textContent = data.message || 'An error occurred.';
+                }
+            } catch (error) {
+                errorMessageElement.textContent = 'Failed to connect to the server.';
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+
+</html>

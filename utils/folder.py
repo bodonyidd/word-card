@@ -1,0 +1,1 @@
+MAIN_FOLDER="fastapi_solution"

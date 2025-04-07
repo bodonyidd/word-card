@@ -1,0 +1,19 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{package_data.get('package_name')}}</title>
+</head>
+<body>
+    <h1>Package: '{{package_data.get('package_name')}}'</h1>
+    
+    <nav>
+        <ul>
+            <li><a href="/cards/learn/{{package_data.get('_id')}}">Learn</a></li>
+            <li><a href="/cards/add_card/{{package_data.get('_id')}}">Add Card</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

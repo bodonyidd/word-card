@@ -1,0 +1,20 @@
+[
+    {
+        "name": "morzsi",
+        "secret": "",
+        "package_ids": []
+    },
+    {
+        "name": "anyad",
+        "secret": "",
+        "package_ids": []
+    },
+    {
+        "name": "fasz",
+        "secret": "",
+        "package_ids": [
+            "package_bfb_e53b55ab-9852-460b-b89d-8b0965f1861b",
+            "package_pakidzs_2acea86f-f50e-4a2f-8fb3-6f4246ea56ac"
+        ]
+    }
+]

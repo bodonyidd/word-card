@@ -1,0 +1,4 @@
+[{
+"words":{"front":"....","back":"..."},"front":"HU", "back":"EN"
+}
+]

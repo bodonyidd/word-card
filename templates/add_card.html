@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Items</title>
+</head>
+
+<body>
+    <h2>Add Items</h2>
+
+    <form id="addForm">
+        <div>
+            <label for="front">Front:</label>
+            <input type="text" id="front" name="front" required>
+        </div>
+        <div>
+            <label for="back">Back:</label>
+            <input type="text" id="back" name="back" required>
+        </div>
+        <p id="errorMessage" style="color: red;"></p>
+
+        <button type="button" id="addNewButton">Add one more</button>
+        <button type="button" id="addButton">Add</button>
+    </form>
+
+    <script>
+        document.getElementById('addButton').addEventListener('click', async function () {
+            const frontValue = document.getElementById('front').value;
+            const backValue = document.getElementById('back').value;
+            const errorMessageElement = document.getElementById('errorMessage');
+            const card_data={"front":frontValue,"back":backValue}
+
+
+
+            // Example logic for the "Add" button
+            if (frontValue && backValue) {
+                alert(`Added: Front - ${frontValue}, Back - ${backValue}`);
+
+                // Clear any previous error messages
+                errorMessageElement.textContent = '';
+                const card_base_url="/cards/add_card/{{package_data.get('_id')}}"
+                try {
+                    const response = await fetch(card_base_url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(card_data)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.success) {
+                        // If registration is successful, redirect to login page
+                        window.location.href = '/package/{{package_data.get("_id")}}';
+                    } else {
+                        // Show error message if the name already exists
+                        errorMessageElement.textContent = data.message || 'An error occurred.';
+                    }
+                } catch (error) {
+                    errorMessageElement.textContent = 'Failed to connect to the server.';
+                    console.error(error);
+                }
+
+
+            } else {
+                alert('Please fill both fields.');
+            }
+        });
+
+        document.getElementById('addNewButton').addEventListener('click', function () {
+            // Clear both input fields
+            document.getElementById('front').value = '';
+            document.getElementById('back').value = '';
+
+        });
+    </script>
+
+
+</body>
+
+</html>

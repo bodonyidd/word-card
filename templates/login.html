@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+
+<body>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <label for="username">Enter your name:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+
+
+        loginForm.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the form from submitting the default way
+
+            const username_field = document.getElementById('username').value;
+            const password_field = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/user/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username: username_field, password: password_field })
+                });
+                console.log(response)
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        // Redirect to home page on successful login
+                        window.location.href = '/home';
+                    } else {
+                        alert('User not found!');
+                    }
+                } else {
+                    alert('An error occurred while logging in.');
+                }
+            } catch (error) {
+                alert('Failed to connect to the server.');
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+
+</html>

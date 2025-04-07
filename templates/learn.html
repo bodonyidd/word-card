@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/../static/css/flip_card.css" />
+    <link rel="stylesheet" href="/../static/css/styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning</title>
+    <script src="/../static/index.js"></script>
+    <style>
+
+    </style>
+
+</head>
+
+<body>
+    <div class="ui block-content">
+        <div class="card-body">
+
+            <div class="content">
+                <div class="flip-box">
+                    <div class="flip-box-inner">
+                        <div class="flip-box-front">
+                            <h2>Front Side</h2>
+                            <div style="padding: 50px;">
+                                <span id="front-data">{{cards[iterator]["front"] }}</span>
+                            </div>
+                        </div>
+                        <div class="flip-box-back">
+                            <h2>Back Side</h2>
+                            <div style="padding: 50px;">
+                                <span id="back-data">{{cards[iterator]["back"]}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="content">
+        </div> -->
+
+
+            <div class="button-container">
+                <div class="button-part">
+                    <div class="basic-rounded-button">
+                        <button id="NO" class="button red-button cirlce-button">NO</button>
+
+                    </div>
+                    <div class="basic-rounded-button">
+                        <div class="flip">
+                            <div>
+
+                                <button id="flip_button" class="button cirlce-button flip-button">FLIP</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="basic-rounded-button">
+                        <div class="sucessfull-button">
+
+                            <button id="YES" class="button cirlce-button green-button">YES</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="block-content">
+        <li><a href="/package/{{package_id}}">Back to package page</a></li>
+    </div>
+</body>
+
+<script>
+    document.querySelectorAll('.flip-box').forEach(box => {
+        box.addEventListener('click', function () {
+            this.classList.toggle('flipped');
+        });
+    });
+</script>
+<script>
+    // Add event listener to the button
+    document.getElementById('flip_button').addEventListener('click', function () {
+        // Toggle the 'flipped' class on the flip-box when the button is clicked
+        document.querySelector('.flip-box').classList.toggle('flipped');
+    });
+</script>
+<script>
+
+    console.log('Package ID: {{ package_id }}')
+    console.log('Starting index: {{ default_index }}')
+</script>
+<script>
+
+
+</script>
+
+<script>
+    // Array or data to iterate over
+    const injected_data = {{ cards | tojson }};
+</script>
+<script>
+// Unflip the card
+function unflip_card() {
+    document.querySelector(".flip-box").classList.remove("flipped")
+}
+</script>
+<script>
+    var iterator = {{ iterator }}
+
+    if (typeof iterator === 'undefined') {
+        iterator = 0;
+    }
+</script>
+<script>
+    function move_to_next_card() {
+        if (iterator < injected_data.length) {
+            console.log(injected_data[iterator]);
+            document.getElementById("front-data").textContent = injected_data[iterator]["front"]
+            document.getElementById("back-data").textContent = injected_data[iterator]["back"]
+            console.log(iterator);
+            unflip_card()
+            // Display the current iteration
+            iterator = iterator + 1;
+        } else {
+            // Optionally disable the button
+            document.getElementById("YES").disabled = true
+            document.getElementById("NO").disabled = true;
+        }
+}
+
+    console.log("iteration", iterator)
+    console.log(injected_data)
+
+
+    // Button click event
+    document.getElementById("YES").addEventListener("click", () => {
+        move_to_next_card()
+    })
+
+    document.getElementById("NO").addEventListener("click", () => {
+        move_to_next_card()
+    }
+    )
+
+</script>
+
+</html>
+
+<!-- TODO: küldjön requestst h yes or no és vmi számlálót növelne-->
+<!-- TODO: vmi olyan animáció kéne a szövegre vagy a kartyara h a cucc feltűnő legyen h változik -->
+ <!-- Ha vége akkor megoldani h jelezni h vége a cuccnak és visszat ud menni az ember de nem automatikusan -->
+
+<!-- free roam a kártyáknál h lehet előre-hátra menni  -->

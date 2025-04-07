@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+
+<body>
+    <h1>Hello, {{ username }}!</h1>
+
+    <h3>Here are your packages:</h3>
+    {% if packages | length > 0 %}
+    <ul>
+        {% for item in packages %}
+        <li><a href="/package/{{ item.get('_id') }}">{{ item.get('package_name') }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No items found.</p>
+    {% endif %}
+    <a href="/package/create_package">Create new package here</a>
+    <form id="logout">
+        <button type="submit">Logout</button>
+    </form>
+
+</body>
+
+<script>
+    const logout = document.getElementById('logout');
+
+
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent the form from submitting the default way
+
+        try {
+            const response = await fetch('/user/logout', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+        } catch (error) {
+            alert('Failed to connect to the server.');
+            console.error(error);
+        }
+    });
+</script>
+
+</html>
