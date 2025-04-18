@@ -8,17 +8,24 @@ from utils.handle_users_mongo import User_Management
 from routers import cards_router
 from routers import package_router
 from routers import user_router
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 
 app = FastAPI()
+
+BASE_DIR = Path(__file__).resolve().parent
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 app.include_router(cards_router.router)
 app.include_router(package_router.router)
 app.include_router(user_router.router)
-app.mount("/static", StaticFiles(directory="fastapi_solution/static"), name="static")
+app.mount("/static", StaticFiles(directory=f"{BASE_DIR}/static"), name="static")
 
 
 # JinjaTemplates
 from utils.template_path import templates
-
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -28,6 +35,7 @@ async def slash(request: Request):
     2. return them
     """
     return templates.TemplateResponse(request=request, name="landing_page.html")
+
 
 @app.get("/home", response_class=HTMLResponse)
 async def home(request: Request, user_id: str = Cookie(None)):
@@ -49,7 +57,6 @@ async def home(request: Request, user_id: str = Cookie(None)):
     )
 
 
-
 @app.exception_handler(StarletteHTTPException)
 async def custom_404_handler(request: Request, exc: StarletteHTTPException):
     if exc.status_code == 404:
@@ -59,11 +66,6 @@ async def custom_404_handler(request: Request, exc: StarletteHTTPException):
     return HTMLResponse(f"<h1>{exc.detail}</h1>", status_code=exc.status_code)
 
 
-
-
-
-
 # if __name__ == "__main__":
 #     import uvicorn
 #     uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
-
