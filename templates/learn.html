@@ -114,11 +114,11 @@ function unflip_card() {
 <script>
     function move_to_next_card() {
         if (iterator < injected_data.length) {
+            unflip_card()
             console.log(injected_data[iterator]);
             document.getElementById("front-data").textContent = injected_data[iterator]["front"]
             document.getElementById("back-data").textContent = injected_data[iterator]["back"]
             console.log(iterator);
-            unflip_card()
             // Display the current iteration
             iterator = iterator + 1;
         } else {
