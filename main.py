@@ -25,7 +25,7 @@ app.mount("/static", StaticFiles(directory=f"{BASE_DIR}/static"), name="static")
 
 
 # JinjaTemplates
-from utils.template_path import templates
+# from utils.template_path import templates
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -68,4 +68,4 @@ async def custom_404_handler(request: Request, exc: StarletteHTTPException):
 
 # if __name__ == "__main__":
 #     import uvicorn
-#     uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
+#     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
