@@ -15,6 +15,13 @@ router = APIRouter(
 )
 
 
+@router.get("/test2", response_class=HTMLResponse)
+async def test2(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name="test_2.html",
+    )
+
 @router.get("/create_package", response_class=HTMLResponse)
 async def create_package_form(request: Request):
     return templates.TemplateResponse(

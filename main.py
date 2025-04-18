@@ -18,6 +18,7 @@ app = FastAPI()
 
 BASE_DIR = Path(__file__).resolve().parent
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+
 app.include_router(cards_router.router)
 app.include_router(package_router.router)
 app.include_router(user_router.router)
@@ -35,6 +36,15 @@ async def slash(request: Request):
     2. return them
     """
     return templates.TemplateResponse(request=request, name="landing_page.html")
+
+
+@app.get("/test", response_class=HTMLResponse)
+async def test(request: Request):
+    """
+    1. Get cards of the user
+    2. return them
+    """
+    return templates.TemplateResponse(request=request, name="test_1.html")
 
 
 @app.get("/home", response_class=HTMLResponse)
