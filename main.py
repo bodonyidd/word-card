@@ -234,7 +234,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from utils.models import PackageName
 from utils.handle_cards_mongo import Card_Management
 from utils.handle_packages_mongo import Package_Management
-from utils.template_path import templates
+
 
 
 

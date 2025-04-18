@@ -1,3 +1,5 @@
 from fastapi.templating import Jinja2Templates
+from pathlib import Path
 
-templates = Jinja2Templates(directory="fastapi_solution/templates", auto_reload=True)
+BASE_DIR = Path(__file__).resolve().parent
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
