@@ -83,7 +83,7 @@ from fastapi import APIRouter, Request, Cookie
 
 from utils.handle_cards_mongo import Card_Management
 from utils.handle_packages_mongo import Package_Management
-from utils.template_path import templates
+
 from  utils.models import Card
 from routers.package_router import show_package
 from bson.objectid import ObjectId
@@ -161,7 +161,7 @@ from utils.handle_users_mongo import User_Management
 from utils.models import PackageName, UserLogin
 from utils.handle_cards_mongo import Card_Management
 from utils.handle_packages_mongo import Package_Management
-from utils.template_path import templates
+
 
 
 
