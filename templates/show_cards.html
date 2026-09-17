@@ -127,7 +127,7 @@
     // A Jinja2 a 'my_data' nevű Python listát JSON formátummá alakítja, 
     // és biztonságosan beilleszti a JavaScriptbe.
     // A 'safe' szűrő megakadályozza, hogy a Jinja2 HTML entitásokká (pl. &quot;) alakítsa az idézőjeleket.
-    let dataPairs = {{ my_data | tojson | safe }};
+    let dataPairs = {{ data["cards"] | tojson | safe }};
 
     // Ha véletlenül üresen érkezne az adat, biztosítjuk, hogy tömb maradjon
     if (!dataPairs) {
