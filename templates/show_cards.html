@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kulcs-Érték Táblázat</title>
+    <style>
+        /* CSS Formázás */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-add {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-add:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+            color: #333;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-delete {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .btn-delete:hover {
+            background-color: #da190b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Adatok kezelése</h2>
+    
+    <!-- Új elem hozzáadása -->
+    <div class="input-group">
+        <input type="text" id="keyInput" placeholder="Kulcs (pl. Név)">
+        <input type="text" id="valueInput" placeholder="Érték (pl. Kovács János)">
+        <button class="btn-add" onclick="addPair()">Hozzáadás</button>
+    </div>
+
+    <!-- Táblázat -->
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Kulcs</th>
+                <th>Érték</th>
+                <th style="width: 180px;">Műveletek</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- A sorokat a JavaScript generálja -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // A Jinja2 a 'my_data' nevű Python listát JSON formátummá alakítja, 
+    // és biztonságosan beilleszti a JavaScriptbe.
+    // A 'safe' szűrő megakadályozza, hogy a Jinja2 HTML entitásokká (pl. &quot;) alakítsa az idézőjeleket.
+    let dataPairs = {{ my_data | tojson | safe }};
+
+    // Ha véletlenül üresen érkezne az adat, biztosítjuk, hogy tömb maradjon
+    if (!dataPairs) {
+        dataPairs = [];
+    }
+
+    // --- INNENTŐL MARAD AZ EREDETI KÓD ---
+
+    function renderTable() {
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = ''; 
+
+        dataPairs.forEach((item, index) => {
+            const tr = document.createElement('tr');
+    // Táblázat megjelenítése (renderelés)
+    function renderTable() {
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = ''; // Előző tartalom törlése
+
+        dataPairs.forEach((item, index) => {
+            const tr = document.createElement('tr');
+
+            // Kulcs cella
+            const tdKey = document.createElement('td');
+            tdKey.textContent = item.key;
+            
+            // Érték cella
+            const tdValue = document.createElement('td');
+            tdValue.textContent = item.value;
+
+            // Műveletek cella (Gombok)
+            const tdActions = document.createElement('td');
+
+            // Szerkesztés gomb
+            const editBtn = document.createElement('button');
+            editBtn.textContent = 'Edit';
+            editBtn.className = 'btn-edit';
+            editBtn.onclick = () => editPair(index);
+
+            // Törlés gomb
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.className = 'btn-delete';
+            deleteBtn.onclick = () => deletePair(index);
+
+            tdActions.appendChild(editBtn);
+            tdActions.appendChild(deleteBtn);
+
+            tr.appendChild(tdKey);
+            tr.appendChild(tdValue);
+            tr.appendChild(tdActions);
+
+            tbody.appendChild(tr);
+        });
+    }
+
+    // Új kulcs-érték pár hozzáadása
+    function addPair() {
+        const keyInput = document.getElementById('keyInput');
+        const valueInput = document.getElementById('valueInput');
+        
+        const key = keyInput.value.trim();
+        const value = valueInput.value.trim();
+
+        if (key === "" || value === "") {
+            alert("Kérlek töltsd ki a kulcs és az érték mezőt is!");
+            return;
+        }
+
+        dataPairs.push({ key: key, value: value });
+        
+        // Mezők ürítése
+        keyInput.value = '';
+        valueInput.value = '';
+        
+        renderTable();
+    }
+
+    // Elem törlése
+    function deletePair(index) {
+        if (confirm("Biztosan törölni szeretnéd ezt a sort?")) {
+            dataPairs.splice(index, 1);
+            renderTable();
+        }
+    }
+
+    // Elem szerkesztése
+    function editPair(index) {
+        const currentKey = dataPairs[index].key;
+        const currentValue = dataPairs[index].value;
+
+        // Felugró ablakok az új adatok bekérésére
+        const newKey = prompt("Módosítsd a kulcsot:", currentKey);
+        const newValue = prompt("Módosítsd az értéket:", currentValue);
+
+        // Csak akkor mentjük, ha a felhasználó nem nyomott Mégse-t és nem üres az adat
+        if (newKey !== null && newValue !== null) {
+            if (newKey.trim() !== "" && newValue.trim() !== "") {
+                dataPairs[index].key = newKey.trim();
+                dataPairs[index].value = newValue.trim();
+                renderTable();
+            } else {
+                alert("A kulcs és az érték nem lehet üres!");
+            }
+        }
+    }
+
+    // Kezdeti táblázat generálás az oldal betöltésekor
+    renderTable();
+</script>
+
+</body>
+</html>
