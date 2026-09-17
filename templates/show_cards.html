@@ -127,36 +127,28 @@
     // A Jinja2 a 'my_data' nevű Python listát JSON formátummá alakítja, 
     // és biztonságosan beilleszti a JavaScriptbe.
     // A 'safe' szűrő megakadályozza, hogy a Jinja2 HTML entitásokká (pl. &quot;) alakítsa az idézőjeleket.
-    let dataPairs = {{ data["cards"] | tojson | safe }};
-
+    let data_raw = {{ data | tojson | safe }};
+    let dataPairs= data["cards"]
     // Ha véletlenül üresen érkezne az adat, biztosítjuk, hogy tömb maradjon
     if (!dataPairs) {
         dataPairs = [];
     }
 
-    // --- INNENTŐL MARAD AZ EREDETI KÓD ---
-
-    function renderTable() {
-        const tbody = document.getElementById('tableBody');
-        tbody.innerHTML = ''; 
-
-        dataPairs.forEach((item, index) => {
-            const tr = document.createElement('tr');
     // Táblázat megjelenítése (renderelés)
     function renderTable() {
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = ''; // Előző tartalom törlése
 
-        dataPairs.forEach((item, index) => {
-            const tr = document.createElement('tr');
+        for (let i = 0; i < dataPairs.length; i++) {
+          const tr = document.createElement('tr');
 
             // Kulcs cella
             const tdKey = document.createElement('td');
-            tdKey.textContent = item.key;
+            tdKey.textContent = i["front"];
             
             // Érték cella
             const tdValue = document.createElement('td');
-            tdValue.textContent = item.value;
+            tdValue.textContent = i["back"];
 
             // Műveletek cella (Gombok)
             const tdActions = document.createElement('td');
@@ -181,6 +173,9 @@
             tr.appendChild(tdActions);
 
             tbody.appendChild(tr);
+}
+        dataPairs.forEach((item, index) => {
+            
         });
     }
 
