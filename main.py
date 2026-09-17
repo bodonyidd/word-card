@@ -162,7 +162,7 @@ async def show_cards(
     return templates.TemplateResponse(
             request=request,
             name="show_cards.html",
-            data_content={"cards": cards,"package_id": str(package_id)},
+            context={"cards": cards,"package_id": str(package_id)},
         )
 
 
