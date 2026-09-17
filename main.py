@@ -146,6 +146,26 @@ async def learn_cards(
             context={"cards": cards,"package_id": str(package_id),"iterator":0},
         )
 
+@app.get("/cards/show/{package_id}")
+async def show_cards(
+    request: Request, package_id: str, user_id: str = Cookie(None),
+):
+
+    card_management = Card_Management()
+    cards = card_management.get_cards_by_package_id(package_id=package_id)
+    for item in cards:
+        for k,v in item.items():
+            if isinstance(v,ObjectId):
+                item[k]=str(v)
+    
+    print(cards)
+    return templates.TemplateResponse(
+            request=request,
+            name="show_cards.html",
+            data={"cards": cards,"package_id": str(package_id)},
+        )
+
+
 # TODO 2024.12.22 LAST
 # TODO html page a cardok felsorolásához
 # learn page html
