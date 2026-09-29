@@ -141,15 +141,20 @@
 
        for (let i = dataPairs.length-1; i > -1; i--) {
           const tr = document.createElement('tr');
+            tr.setAttribute("id",i)
 
             // Kulcs cella
             const tdKey = document.createElement('td');
             tdKey.textContent = dataPairs[i]["front"];
+            tdKey.role = "front";
             
             // Érték cella
             const tdValue = document.createElement('td');
             tdValue.textContent = dataPairs[i]["back"];
+            tdValue.role = "back";
+           tdValue.id = $´back-{i}´;
 
+           
             // Műveletek cella (Gombok)
             const tdActions = document.createElement('td');
 
@@ -168,8 +173,28 @@
             tdActions.appendChild(editBtn);
             tdActions.appendChild(deleteBtn);
 
+           // read + show
+           // Műveletek cella (Gombok)
+            const tdLearningActions = document.createElement('td');
+
+           const blur = document.createElement('button');
+           blur.type = 'button';
+            blur.innerHTML='<i class="bi bi-eye-fill"></i>'
+            blur.className = "btn btn-outline-secondary";
+            blur.onclick = () => blurChanger($´back-{i}´);
+           
+           const readBtn = document.createElement('button');
+            readBtn.innerHTML='<i class="bi bi-volume-up"></i>'
+           readBtn.type = 'button';
+            readBtn.className = 'btn btn-outline-secondary';
+            readBtn.onclick = () => readLoud(dataPairs[i]["back"]);
+
+            tdLearningActions.appendChild(blur);
+            tdLearningActions.appendChild(readBtn);
+
             tr.appendChild(tdKey);
             tr.appendChild(tdValue);
+           tr.appendChild(tdLearningActions);
             tr.appendChild(tdActions);
 
             tbody.appendChild(tr);
@@ -228,6 +253,23 @@
                 alert("A kulcs és az érték nem lehet üres!");
             }
         }
+    }
+
+     function blurChanger(value_cell_id) {
+         const cell  = document.querySelector($´{value_cell_id}´)
+        let cell_style = cell.style['filter']
+        if cell_stlye = 'blur(8px)':
+         cell.style['filter'] = ''
+        else:
+         cell.style['filter'] = 'blur(8px)'
+    }
+
+     function readLoud(word) {
+        const utterance = new SpeechSynthesisUtterance($´{word}´);
+        utterance.lang = "en-EN"; 
+         // TODO: FIX IT LATER TO BE CHANGEABLE
+        
+        speechSynthesis.speak(utterance);
     }
 
     // Kezdeti táblázat generálás az oldal betöltésekor
