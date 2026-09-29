@@ -181,7 +181,7 @@
            blur.type = 'button';
             blur.innerHTML='<i class="bi bi-eye-fill"></i>'
             blur.className = "btn btn-outline-secondary";
-            blur.onclick = () => blurChanger($´back-{i}´);
+            blur.onclick = () => blurChanger(´back-${i}´);
            
            const readBtn = document.createElement('button');
             readBtn.innerHTML='<i class="bi bi-volume-up"></i>'
@@ -256,7 +256,7 @@
     }
 
      function blurChanger(value_cell_id) {
-         const cell  = document.querySelector($´{value_cell_id}´)
+         const cell  = document.querySelector(´${value_cell_id}´)
         let cell_style = cell.style['filter']
         if cell_stlye = 'blur(8px)':
          cell.style['filter'] = ''
@@ -265,7 +265,7 @@
     }
 
      function readLoud(word) {
-        const utterance = new SpeechSynthesisUtterance($´{word}´);
+        const utterance = new SpeechSynthesisUtterance(´${word}´);
         utterance.lang = "en-EN"; 
          // TODO: FIX IT LATER TO BE CHANGEABLE
         
