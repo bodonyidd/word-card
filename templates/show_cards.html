@@ -256,13 +256,14 @@
     }
 
      function blurChanger(value_cell_id) {
-         const cell  = document.querySelector(`${value_cell_id}`)
-        let cell_style = cell.style['filter']
-        if cell_style == 'blur(8px)':
-         cell.style['filter'] = ''
-        else:
-         cell.style['filter'] = 'blur(8px)'
-    }
+         const cell  = document.getElementById(`${value_cell_id}`)
+        let cell_style = cell.style.filter
+        if cell_style == 'blur(8px)'{
+         cell.style.filter = ''}
+        else{
+         cell.style.filter = 'blur(8px)'
+        }
+     }
 
      function readLoud(word) {
         const utterance = new SpeechSynthesisUtterance(`${word}`);
