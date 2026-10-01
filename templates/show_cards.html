@@ -100,7 +100,10 @@
 
 <div class="container">
     <h2>Handling cards</h2>
-    
+     <div class="form-check form-switch">
+  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+  <label class="form-check-label" for="flexSwitchCheckChecked">Hide 'back' side</label>
+    </div>
     <!-- Új elem hozzáadása -->
     <div class="input-group">
         <input type="text" id="keyInput" placeholder="Kulcs (pl. Név)">
@@ -186,6 +189,7 @@
 </svg>`
             blur.className = "btn btn-outline-secondary";
             blur.onclick = () => blurChanger(`back-${i}`);
+            blurChanger(`back-${i}`)
            
            const readBtn = document.createElement('button');
             readBtn.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-up" viewBox="0 0 16 16">
@@ -283,6 +287,20 @@
 
     // Kezdeti táblázat generálás az oldal betöltésekor
     renderTable();
+
+
+
+    const switchElement = document.getElementById('flexSwitchCheckChecked');
+
+switchElement.addEventListener('change', function() {
+    if (this.checked) {
+        for (let i = dataPairs.length-1; i > -1; i--) {
+          blurChanger(`back-${i}`) }
+    } else {
+       for (let i = dataPairs.length-1; i > -1; i--) {
+          blurChanger(`back-${i}`) }
+    }
+});
 </script>
 
 </body>
