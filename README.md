@@ -2,7 +2,7 @@ TODO:
 - Leckék: -- entitled vs eligible
           -- associated vs related
   (képek a chat gptből, lapozható,görgethető)
-  - AI
+  - AI (példa mondatra stb)
   - Tanulás:
     -  Full random
     -  last 30-40
