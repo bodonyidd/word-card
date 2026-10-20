@@ -112,9 +112,11 @@ function unflip_card() {
     }
 </script>
 <script>
-    function move_to_next_card() {
+    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+   async function move_to_next_card() {
         if (iterator < injected_data.length) {
             unflip_card()
+            await sleep(500);
             console.log(injected_data[iterator]);
             document.getElementById("front-data").textContent = injected_data[iterator]["front"]
             document.getElementById("back-data").textContent = injected_data[iterator]["back"]
