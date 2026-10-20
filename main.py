@@ -139,12 +139,12 @@ async def learn_cards(
         for k,v in item.items():
             if isinstance(v,ObjectId):
                 item[k]=str(v)
-    
-    print(cards)
+    random.shuffle(cards)
+    #print(cards)
     return templates.TemplateResponse(
             request=request,
             name="learn.html",
-            context={"cards": random.shuffle(cards),"package_id": str(package_id),"iterator":0},
+            context={"cards": cards,"package_id": str(package_id),"iterator":0},
         )
 
 @app.get("/cards/show/{package_id}")
