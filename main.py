@@ -13,6 +13,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
+import random 
 
 app = FastAPI()
 
@@ -143,7 +144,7 @@ async def learn_cards(
     return templates.TemplateResponse(
             request=request,
             name="learn.html",
-            context={"cards": cards,"package_id": str(package_id),"iterator":0},
+            context={"cards": random.shuffle(cards),"package_id": str(package_id),"iterator":0},
         )
 
 @app.get("/cards/show/{package_id}")
