@@ -21,7 +21,7 @@
         </div>
         <p id="errorMessage" style="color: red;"></p>
 
-        <button type="button" id="addNewButton">Add one more</button>
+        <button type="button" id="go_ back_btn">Go back</button>
         <button type="button" id="addButton">Add</button>
     </form>
 
@@ -54,7 +54,7 @@
 
                     if (response.ok && data.success) {
                         // If registration is successful, redirect to login page
-                        window.location.href = '/package/{{package_data.get("_id")}}';
+                        window.location.href = '/cards/add_card/{{package_data.get("_id")}}';
                     } else {
                         // Show error message if the name already exists
                         errorMessageElement.textContent = data.message || 'An error occurred.';
@@ -70,10 +70,9 @@
             }
         });
 
-        document.getElementById('addNewButton').addEventListener('click', function () {
+        document.getElementById('go_ back_btn').addEventListener('click', function () {
             // Clear both input fields
-            document.getElementById('front').value = '';
-            document.getElementById('back').value = '';
+            window.location.href = '/package/{{package_data.get("_id")}}'
 
         });
     </script>
