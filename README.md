@@ -24,3 +24,7 @@ az alapján kapni az oktatási tervet
 tag-et lehetne a szavakhoz adni, pl: fontos, mindig elfelejtem
 ezt lehetne edit és új szó esetén is
 
+
+egy új page 
+esetleg egy lista h mit kell majd felvenni mint szó
+
